@@ -35,7 +35,7 @@ Wait for webview to end and close the server.
 app.listen 3000, ->
 
     console.log 'Listening on port 3000'
-    exec "#{FCPATH}bin/desktop http://localhost:3000", (err, stdout, stderr) ->
+    exec "webview http://localhost:3000", (err, stdout, stderr) ->
         console.log stderr if stderr?
         console.log stdout if stdout?
         process.exit()
