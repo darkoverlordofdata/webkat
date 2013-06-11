@@ -1,0 +1,10 @@
+Requires vala 0.18
+
+
+cd /usr/share/vala-0.18/vapi
+sudo cp webkit-1.0.deps webkitgtk-3.0.deps
+sudo cp webkit-1.0.vapi webkitgtk-3.0.vapi
+gksudo gedit webkitgtk-3.0.deps
+change gdk-2.0 to gdk-3.0
+change gtk+-2.0 to gtk+-3.0
+save and quit
