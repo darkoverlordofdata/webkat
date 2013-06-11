@@ -3,6 +3,18 @@
 
 A webkit shell for viewing localhost output.
 
+##Install
+
+Requires valac v0.18
+
+```bash
+$ git clone git@github.com:darkoverlordofdata/webview.git
+$ cd webview
+$ make all
+```
+
+
+
 
 ##Example
 
@@ -26,7 +38,24 @@ app.listen 3000, ->
     exec "#{FCPATH}bin/desktop http://localhost:3000", (err, stdout, stderr) ->
         console.log stderr if stderr?
         console.log stdout if stdout?
+        process.exit()
 ```
+
+##Trouble?
+if you get this error:
+error: Package `webkitgtk-3.0' not found in specified Vala API directories or GObject-Introspection GIR directories
+
+```bash
+$ cd /usr/share/vala-0.18/vapi
+$ sudo cp webkit-1.0.deps webkitgtk-3.0.deps
+$ sudo cp webkit-1.0.vapi webkitgtk-3.0.vapi
+$ gksudo gedit webkitgtk-3.0.deps
+```
+    Then:
+    change gdk-2.0 to gdk-3.0
+    change gtk+-2.0 to gtk+-3.0
+    save and quit
+
 
 
 ## License
