@@ -11,6 +11,7 @@ Requires valac v0.18
 $ git clone git@github.com:darkoverlordofdata/webview.git
 $ cd webview
 $ make all
+$ sudo make install
 ```
 
 

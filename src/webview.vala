@@ -30,7 +30,6 @@ using WebKit;
 
 public class Webview : Window {
 
-  private const string ICON = "icon.png";
   private const string TITLE = "Webview";
   private const int WIDTH = 1280;
   private const int HEIGHT = 1024;
@@ -40,9 +39,26 @@ public class Webview : Window {
   /**
    * Constructor
    */
-  public Webview(string url) {
+  public Webview(bool debug, string url) {
 
-    icon = new Gdk.Pixbuf.from_file(ICON);
+
+    try {
+        icon = new Gdk.Pixbuf.from_file("/usr/local/share/icons/webview.png");
+    }
+    catch (Error e) {
+        icon = null;
+        stdout.printf("Error: %s\n", e.message);
+    }
+    if (icon == null) {
+        try {
+            icon = new Gdk.Pixbuf.from_file("../share/icons/webview.png");
+        }
+        catch (Error e) {
+            icon = null;
+            stdout.printf("Error: %s\n", e.message);
+        }
+
+    }
     title = Webview.TITLE;
     set_default_size(Webview.WIDTH, Webview.HEIGHT);
 
@@ -114,8 +130,28 @@ public class Webview : Window {
    */
   public static int main(string[] args) {
 
+    string url = "http://localhost:53610";
+    bool mode = false;
+
+    foreach (string arg in args) {
+
+        if (arg[0:2] == "-d" ) {
+            mode = true;
+        }
+        else if (arg[0:7] == "--debug") {
+            mode = true;
+        }
+        else if (arg[0:7] == "http://") {
+            url = arg;
+        }
+        else if (arg[0:8] == "https://") {
+            url = arg;
+        }
+
+    }
+
     Gtk.init(ref args);
-    var client = new Webview(args[1]);
+    var client = new Webview(mode, url);
     Gtk.main();
     return 0;
   }
