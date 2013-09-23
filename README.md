@@ -1,6 +1,13 @@
 #WebKat
 
 A simple webkit shell.
+WebKat does NOT have:
+
+    address bar
+    scroll bars
+    tool bars
+    menus
+    status bars
 
 ##Install
 
