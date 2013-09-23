@@ -1,6 +1,6 @@
 #WebKat
 
-A simple webkit shell
+A simple webkit shell.
 
 ##Install
 
@@ -20,6 +20,7 @@ webkat <url> <options>
     -H --height     height in pixels
     -W --width      width in pixels
     -t --title      title bar
+    -d --debug      enable chrome developer tools
 
 
 

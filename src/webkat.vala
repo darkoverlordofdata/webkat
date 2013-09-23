@@ -34,6 +34,8 @@ public class Webkat : Window {
   private const int WIDTH = 1280;
   private const int HEIGHT = 1024;
 
+  public bool use_inspector = false;
+
   private WebView webView;
 
   /**
@@ -60,6 +62,7 @@ public class Webkat : Window {
 
     }
     this.title = title;
+    use_inspector = debug;
     set_default_size(width, height);
 
     //  Make the client window
@@ -117,7 +120,11 @@ public class Webkat : Window {
    */
   public unowned WebView inspectWebView(WebView v) {
 
-    unowned WebView result = (new Inspector(this)).webView;
+    unowned WebView result = null;
+
+    if (use_inspector) {
+        result = (new Inspector(this)).webView;
+    }
     return result;
   }
 
@@ -131,7 +138,7 @@ public class Webkat : Window {
   public static int main(string[] args) {
 
     string url = "http://www.google.com";
-    string title = "WebView";
+    string title = "WebKat";
     string width = "1280";
     string height = "1024";
     bool mode = false;
