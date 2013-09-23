@@ -9,6 +9,14 @@ WebKat does NOT have:
     menus
     status bars
 
+What does webkat do?
+
+    display url from command line
+    optionally set window size
+    optionally allow web inspector dev tools
+    sit there (like my cat)
+
+
 ##Install
 
 Requires valac v0.18
