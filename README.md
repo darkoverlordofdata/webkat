@@ -1,19 +1,25 @@
-#WebView
+#WebKat
 
-
-A webkit shell for viewing localhost output.
+A simple webkit shell
 
 ##Install
 
 Requires valac v0.18
 
 ```bash
-$ git clone git@github.com:darkoverlordofdata/webview.git
-$ cd webview
+$ git clone git@github.com:darkoverlordofdata/webkat.git
+$ cd webkat
 $ make all
 $ sudo make install
 ```
 
+##Usage
+
+webkat <url> <options>
+
+    -H --height     height in pixels
+    -W --width      width in pixels
+    -t --title      title bar
 
 
 
@@ -29,14 +35,14 @@ app = express()
 ```
 
 
-Start up server and view outut in webview.
-Wait for webview to end and close the server.
+Start up server and view outut in webkat.
+Wait for webkat to end and close the server.
 
 ```coffeescript
 app.listen 3000, ->
 
     console.log 'Listening on port 3000'
-    exec "webview http://localhost:3000", (err, stdout, stderr) ->
+    exec "webkat http://localhost:3000", (err, stdout, stderr) ->
         console.log stderr if stderr?
         console.log stdout if stdout?
         process.exit()
@@ -52,10 +58,10 @@ $ sudo cp webkit-1.0.deps webkitgtk-3.0.deps
 $ sudo cp webkit-1.0.vapi webkitgtk-3.0.vapi
 $ gksudo gedit webkitgtk-3.0.deps
 ```
-    Then:
-    change gdk-2.0 to gdk-3.0
-    change gtk+-2.0 to gtk+-3.0
-    save and quit
+Then:
+change gdk-2.0 to gdk-3.0
+change gtk+-2.0 to gtk+-3.0
+save and quit
 
 
 

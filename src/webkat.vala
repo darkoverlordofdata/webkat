@@ -1,7 +1,7 @@
 
 /*
 +--------------------------------------------------------------------+
-| Webview
+| Webkat
 +--------------------------------------------------------------------+
 | Copyright DarkOverlordOfData (c) 2013
 +--------------------------------------------------------------------+
@@ -18,19 +18,19 @@
 *
 * "Yu Mo Gui Gwai Fai Di Zao" -- Uncle
 *
-* Class Webview
+* Class Webkat
 *
 *   A WebKit client to preview the local server output
-*   Use for local debugging
+*   Use for local debugging & design
 *
 */
 
 using Gtk;
 using WebKit;
 
-public class Webview : Window {
+public class Webkat : Window {
 
-  private const string TITLE = "Webview";
+  private const string TITLE = "WebKat";
   private const int WIDTH = 1280;
   private const int HEIGHT = 1024;
 
@@ -39,11 +39,11 @@ public class Webview : Window {
   /**
    * Constructor
    */
-  public Webview(bool debug, string url) {
+  public Webkat(bool debug, string url, string title, int width, int height) {
 
 
     try {
-        icon = new Gdk.Pixbuf.from_file("/usr/local/share/icons/webview.png");
+        icon = new Gdk.Pixbuf.from_file("/usr/local/share/icons/webkat.png");
     }
     catch (Error e) {
         icon = null;
@@ -51,7 +51,7 @@ public class Webview : Window {
     }
     if (icon == null) {
         try {
-            icon = new Gdk.Pixbuf.from_file("../share/icons/webview.png");
+            icon = new Gdk.Pixbuf.from_file("../share/icons/webkat.png");
         }
         catch (Error e) {
             icon = null;
@@ -59,8 +59,8 @@ public class Webview : Window {
         }
 
     }
-    title = Webview.TITLE;
-    set_default_size(Webview.WIDTH, Webview.HEIGHT);
+    this.title = title;
+    set_default_size(width, height);
 
     //  Make the client window
     webView = new WebView();
@@ -103,7 +103,7 @@ public class Webview : Window {
    */
   public void titleChanged(Object source, Object frame, string title) {
 
-    this.title = title ?? Webview.TITLE;
+    this.title = title ?? Webkat.TITLE;
   }
 
   /**
@@ -130,28 +130,68 @@ public class Webview : Window {
    */
   public static int main(string[] args) {
 
-    string url = "http://localhost:53610";
+    string url = "http://www.google.com";
+    string title = "WebView";
+    string width = "1280";
+    string height = "1024";
     bool mode = false;
+    bool set_title = false;
+    bool set_width = false;
+    bool set_height = false;
 
     foreach (string arg in args) {
 
-        if (arg[0:2] == "-d" ) {
+        if (set_title) {
+            title = arg;
+            set_title = false;
+            continue;
+        }
+        if (set_width) {
+            width = arg;
+            set_width = false;
+            continue;
+        }
+        if (set_height) {
+            height = arg;
+            set_height = false;
+            continue;
+        }
+
+        if (arg == "-d" ) {
             mode = true;
         }
-        else if (arg[0:7] == "--debug") {
+        else if (arg == "--debug") {
             mode = true;
         }
-        else if (arg[0:7] == "http://") {
+        else if (arg == "-t") {
+            set_title = true;
+        }
+        else if (arg == "--title") {
+            set_title = true;
+        }
+        else if (arg == "-W") {
+            set_width = true;
+        }
+        else if (arg == "--width") {
+            set_width = true;
+        }
+        else if (arg == "-H") {
+            set_height = true;
+        }
+        else if (arg == "--height") {
+            set_height = true;
+        }
+        else if (arg.index_of("http://") == 0) {
             url = arg;
         }
-        else if (arg[0:8] == "https://") {
+        else if (arg.index_of("https://") == 0) {
             url = arg;
         }
 
     }
 
     Gtk.init(ref args);
-    var client = new Webview(mode, url);
+    var client = new Webkat(mode, url, title, int.parse(width), int.parse(height));
     Gtk.main();
     return 0;
   }
@@ -173,8 +213,8 @@ public class Webview : Window {
     public Inspector(Window parent) {
 
       icon = parent.icon;
-      title = "Developer Tools - " + (parent.title ?? Webview.TITLE);
-      set_default_size(Webview.WIDTH, Webview.HEIGHT);
+      title = "Developer Tools - " + (parent.title ?? Webkat.TITLE);
+      set_default_size(Webkat.WIDTH, Webkat.HEIGHT);
 
       //  Make the client window
       webView = new WebView();
