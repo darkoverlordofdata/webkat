@@ -55,7 +55,7 @@ public class Webkat : Window {
     }
     if (icon == null) {
         try {
-            icon = new Gdk.Pixbuf.from_file("../share/icons/webkat.png");
+            icon = new Gdk.Pixbuf.from_file("./.local/share/icons/webkat.png");
         }
         catch (Error e) {
             icon = null;
@@ -144,11 +144,44 @@ public class Webkat : Window {
     string title = "WebKat";
     string width = "1280";
     string height = "1024";
+	string name = "";
+	string icon = "";
+	string comment = "";
     bool mode = false;
     bool set_title = false;
     bool set_width = false;
     bool set_height = false;
+    bool set_name = false;
+    bool set_icon = false;
+    bool set_comment = false;
 	bool webgl = false;
+	bool desktop = false;
+	string usage = """
+webkat <url> <options>
+
+    -H --height     height in pixels
+    -W --width      width in pixels
+    -t --title      title bar
+    -d --debug      enable chrome developer tools
+	--webg			enable WebGL
+	--desktop NAME  write a NAME.desktop file 
+	--icon LOCATION
+	--comment "Comment"
+
+""";
+	string template = """[Desktop Entry]
+Comment=%s
+Terminal=false
+Name=%s
+Exec=webkat %s
+Type=Application
+Icon=%s
+""";
+
+	if (args.length == 1) {
+		print(usage);
+		return 0;
+	}
 
     foreach (string arg in args) {
 
@@ -165,6 +198,21 @@ public class Webkat : Window {
         if (set_height) {
             height = arg;
             set_height = false;
+            continue;
+        }
+        if (set_name) {
+            name = arg;
+            set_name = false;
+            continue;
+        }
+        if (set_icon) {
+            icon = arg;
+            set_icon = false;
+            continue;
+        }
+        if (set_comment) {
+            comment = arg;
+            set_comment = false;
             continue;
         }
 
@@ -201,15 +249,68 @@ public class Webkat : Window {
         else if (arg.index_of("https://") == 0) {
             url = arg;
         }
+		else if (arg == "--desktop") {
+			desktop = true;
+		}
+		else if (arg == "--name") {
+			set_name = true;
+		}
+		else if (arg == "--icon") {
+			set_icon = true;
+		}
+		else if (arg == "--comment") {
+			set_comment = true;
+		}
 
     }
+	if (desktop) {
+		MainLoop loop = new MainLoop ();
+		try {
+			
+			string user = Environment.get_variable("USER");
+			string path = "/home/%s/Desktop/%s.desktop".printf(user, name);
+			string webgl_flag = webgl ? "--webgl" : "";
+			
+			string cmd = "%s --title %s --width %s --height %s %s".printf(url, title, width, height, webgl_flag);
+			
+			var file = File.new_for_path(path);
+			{
+				var file_stream = file.create(FileCreateFlags.NONE);
+				var data_stream = new DataOutputStream(file_stream);
+				data_stream.put_string(template.printf(comment, name, cmd, icon));
+			}
+			
+			string[] spawn_args = {"chmod", "+x", path};
+			string[] spawn_env = Environ.get();
+			Pid child_pid;
+			
+			Process.spawn_async (null,
+				spawn_args,
+				spawn_env,
+				SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
+				null,
+				out child_pid);
 
-    Gtk.init(ref args);
-    var client = new Webkat(mode, webgl, url, title, int.parse(width), int.parse(height));
-    Gtk.main();
+			ChildWatch.add (child_pid, (pid, status) => {
+				// Triggered when the child indicated by child_pid exits
+				Process.close_pid (pid);
+				loop.quit ();
+			});
+
+			loop.run ();
+			
+		} catch (Error e) {
+		    stderr.printf ("Error: %s\n", e.message);
+		    return 1;
+		}		
+	}
+	else {
+		Gtk.init(ref args);
+		var client = new Webkat(mode, webgl, url, title, int.parse(width), int.parse(height));
+		Gtk.main();
+	}
     return 0;
   }
-
   /**
    *
    * Class Inspector

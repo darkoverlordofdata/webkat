@@ -1,6 +1,11 @@
-#WebKat
+        __        __   _     _  __     _   
+        \ \      / /__| |__ | |/ /__ _| |_ 
+         \ \ /\ / / _ \ '_ \| ' // _` | __|
+          \ V  V /  __/ |_) | . \ (_| | |_ 
+           \_/\_/ \___|_.__/|_|\_\__,_|\__|
+                                            
+                the browser that does nothing...
 
-A simple webkit shell.
 WebKat does NOT have:
 
     address bar
@@ -15,11 +20,9 @@ What does webkat do?
     optionally set window size
     optionally allow web inspector dev tools
     sit there (like my cat)
-	...
+	...and create a shortcut
 
-
-I use it to connect apache localhost web apps to my menu (mainly for html5 games)
-
+    Use it to connect single page webapps to your menu
 
 ##Install
 
@@ -40,7 +43,7 @@ webkat <url> <options>
     -W --width      width in pixels
     -t --title      title bar
     -d --debug      enable chrome developer tools
-	--webg			enable WebGL
+	--webgl			enable WebGL
 	--desktop NAME  write a NAME.desktop file 
 	--icon LOCATION
 	--comment "Comment"
@@ -49,7 +52,7 @@ webkat <url> <options>
 
 ##Example
 ```bash
-$ webkat --webgl http://localhost/shmupwarz
+$ webkat http://localhost/shmupwarz --webgl --desktop --name ShmupWarz --icon /home/bruce/Pictures/d16a.icon.png --comment "Give Me Those Shmup Wars"
 ```
 
 Initialize an express server
@@ -76,19 +79,21 @@ app.listen 3000, ->
 ```
 
 ##Trouble?
-if you get this error:
-error: Package `webkitgtk-3.0' not found in specified Vala API directories or GObject-Introspection GIR directories
+Note - this should not longer be necessary, I'm now using a local copy of the vapi to compile.
 
-```bash
-$ cd /usr/share/vala-0.nn/vapi
-$ sudo cp webkit-1.0.deps webkitgtk-3.0.deps
-$ sudo cp webkit-1.0.vapi webkitgtk-3.0.vapi
-$ gksudo gedit webkitgtk-3.0.deps
-```
-Then:
-change gdk-2.0 to gdk-3.0
-change gtk+-2.0 to gtk+-3.0
-save and quit
+	if you get this error:
+	error: Package `webkitgtk-3.0' not found in specified Vala API directories or GObject-Introspection GIR directories
+
+	```bash
+	$ cd /usr/share/vala-0.nn/vapi
+	$ sudo cp webkit-1.0.deps webkitgtk-3.0.deps
+	$ sudo cp webkit-1.0.vapi webkitgtk-3.0.vapi
+	$ gksudo gedit webkitgtk-3.0.deps
+	```
+	Then:
+	change gdk-2.0 to gdk-3.0
+	change gtk+-2.0 to gtk+-3.0
+	save and quit
 
 
 
