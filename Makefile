@@ -1,6 +1,6 @@
 all:
 	-mkdir bin
-	valac --pkg gtk+-3.0 --pkg webkitgtk-3.0 --thread src/webkat.vala --output=bin/webkat
+	valac --pkg gtk+-3.0 --vapidir ./vapi --pkg webkitgtk-3.0 --thread src/webkat.vala --output=bin/webkat
 
 
 clean:
