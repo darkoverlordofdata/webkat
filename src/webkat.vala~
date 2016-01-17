@@ -41,7 +41,7 @@ public class Webkat : Window {
   /**
    * Constructor
    */
-  public Webkat(bool debug, bool webgl, string url, string title, int width, int height) {
+  public Webkat(bool debug, string url, string title, int width, int height) {
 
 
     try {
@@ -79,7 +79,7 @@ public class Webkat : Window {
     // Add inspector to the context menu
     WebSettings settings = webView.get_settings();
     settings.enable_developer_extras = true;
-	settings.enable_webgl = webgl;
+	settings.enable_webgl = true;
 
     // Wire up the events
     destroy.connect(Gtk.main_quit);
@@ -146,7 +146,6 @@ public class Webkat : Window {
     bool set_title = false;
     bool set_width = false;
     bool set_height = false;
-	bool webgl = false;
 
     foreach (string arg in args) {
 
@@ -171,9 +170,6 @@ public class Webkat : Window {
         }
         else if (arg == "--debug") {
             mode = true;
-        }
-        else if (arg == "--webgl") {
-            webgl = true;
         }
         else if (arg == "-t") {
             set_title = true;
@@ -203,7 +199,7 @@ public class Webkat : Window {
     }
 
     Gtk.init(ref args);
-    var client = new Webkat(mode, webgl, url, title, int.parse(width), int.parse(height));
+    var client = new Webkat(mode, url, title, int.parse(width), int.parse(height));
     Gtk.main();
     return 0;
   }
