@@ -3,17 +3,17 @@
 +--------------------------------------------------------------------+
 | Webkat
 +--------------------------------------------------------------------+
-| Copyright DarkOverlordOfData (c) 2013
+| Copyright DarkOverlordOfData (c) 2013 - 2016
 +--------------------------------------------------------------------+
 |
-| This file is a part of Exspresso
+| This file is a part of Webkat
 |
-| Exspresso is free software; you can copy, modify, and distribute
+| Webkat is free software; you can copy, modify, and distribute
 | it under the terms of the MIT License
 |
 +--------------------------------------------------------------------+
 *
-* @copyright	DarkOverlordOfData (c) 2013
+* @copyright	DarkOverlordOfData (c) 2013 - 2106
 * @author		BruceDavidson@darkoverlordofdata.com
 *
 * "Yu Mo Gui Gwai Fai Di Zao" -- Uncle
@@ -22,6 +22,8 @@
 *
 *   A WebKit client to preview the local server output
 *   Use for local debugging & design
+*   Serving locally hosted web apps 
+*   Controlled via command line
 *
 */
 
@@ -138,7 +140,7 @@ public class Webkat : Window {
    */
   public static int main(string[] args) {
 
-    string url = "http://www.google.com";
+    string url = "http://localhost";
     string title = "WebKat";
     string width = "1280";
     string height = "1024";

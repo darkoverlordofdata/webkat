@@ -23,7 +23,7 @@ I use it to connect apache localhost web apps to my menu (mainly for html5 games
 
 ##Install
 
-Requires valac v0.18
+Requires valac v0.18 or greater
 
 ```bash
 $ git clone git@github.com:darkoverlordofdata/webkat.git
@@ -41,6 +41,9 @@ webkat <url> <options>
     -t --title      title bar
     -d --debug      enable chrome developer tools
 	--webg			enable WebGL
+	--desktop NAME  write a NAME.desktop file 
+	--icon LOCATION
+	--comment "Comment"
 
 
 
