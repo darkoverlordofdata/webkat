@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=ShmupWarz
+Exec=webkat http://localhost/shmupwarz
+Type=Application
+Icon=/home/bruce/Pictures/d16a.icon.png

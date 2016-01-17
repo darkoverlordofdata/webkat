@@ -7,9 +7,6 @@ Program uri=../../bin/webkat
 Run in terminal=2
 Working directories=../../../webkat
 
-[File Loader]
-Files=../../Makefile#10%%%../../src/webkat.vala#71%%%../../README.md#21%%%../../changes.md#5
-
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
