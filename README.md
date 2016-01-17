@@ -16,24 +16,12 @@ WebKat does NOT have:
 
 What does webkat do?
 
-    display url from command line
+    display url from command line and create a shortcut
     optionally set window size
     optionally allow web inspector dev tools
-    sit there (like my cat)
-	...and create a shortcut
+    and just sit there (like my cat)
 
     Use it to connect single page webapps to your menu
-
-##Install
-
-Requires valac v0.18 or greater
-
-```bash
-$ git clone git@github.com:darkoverlordofdata/webkat.git
-$ cd webkat
-$ make all
-$ sudo make install
-```
 
 ##Usage
 
@@ -55,31 +43,20 @@ webkat <url> <options>
 $ webkat http://localhost/shmupwarz --webgl --desktop --name ShmupWarz --icon /home/bruce/Pictures/d16a.icon.png --comment "Give Me Those Shmup Wars"
 ```
 
-Initialize an express server
+##Install
 
+Requires valac v0.18 or greater
 
-```coffeescript
-{exec} = require('child_process')
-express = require('express')
-app = express()
+```bash
+$ git clone git@github.com:darkoverlordofdata/webkat.git
+$ cd webkat
+$ make all
+$ sudo make install
 ```
 
-
-Start up server and view outut in webkat.
-Wait for webkat to end and close the server.
-
-```coffeescript
-app.listen 3000, ->
-
-    console.log 'Listening on port 3000'
-    exec "webkat http://localhost:3000", (err, stdout, stderr) ->
-        console.log stderr if stderr?
-        console.log stdout if stdout?
-        process.exit()
-```
 
 ##Trouble?
-Note - this should not longer be necessary, I'm now using a local copy of the vapi to compile.
+Note - this *should* not longer be necessary, I'm now using a local copy of the vapi to compile.
 
 	if you get this error:
 	error: Package `webkitgtk-3.0' not found in specified Vala API directories or GObject-Introspection GIR directories
