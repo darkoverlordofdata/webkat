@@ -23,27 +23,34 @@ What does webkat do?
 
     Use it to connect single page webapps to your menu
 
-##Usage
+## Usage
 
-webkat <url> <options>
+    Usage:
+    webkat [OPTION...] - WebKat
 
-    -H --height     height in pixels
-    -W --width      width in pixels
-    -t --title      title bar
-    -d --debug      enable chrome developer tools
-	--webgl			enable WebGL
-	--desktop NAME  write a NAME.desktop file 
-	--icon LOCATION
-	--comment "Comment"
+    Help Options:
+    -?, --help               Show help options
 
+    Application Options:
+    -h, --height             height in pixels
+    -w, --width              width in pixels
+    -t, --title              title bar text
+    -d, --debug              debug mode?
+    -g, --webgl              enable webgl
+    -v, --version            debug mode?
+    -n, --name               desktop file name
+    -i, --icon=DIRECTORY     desktop icon
+    -c, --comment            desktop comment
 
-
-##Example
+## Example
 ```bash
-$ webkat http://localhost/shmupwarz --webgl --desktop --name ShmupWarz --icon /home/bruce/Pictures/d16a.icon.png --comment "Give Me Those Shmup Wars"
+$ webkat http://localhost/shmupwarz --webgl --debug --desktop --name ShmupWarz --icon /home/bruce/Pictures/d16a.icon.png --comment "Give Me Those Shmup Wars"
+
+$ webkat --webgl https://www.facebook.com 
+
 ```
 
-##Install
+## Install
 
 Requires valac v0.18 or greater
 
@@ -55,7 +62,7 @@ $ sudo make install
 ```
 
 
-##Trouble?
+## Trouble?
 Note - this *should* not longer be necessary, I'm now using a local copy of the vapi to compile.
 
 	if you get this error:

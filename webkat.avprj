@@ -1,0 +1,30 @@
+### AutoVala Project ###
+autovala_version: 24
+project_name: webkat
+*vala_version: 0.34
+
+vapidir: src/vapis
+
+vala_binary: src/webkat
+vala_check_package: gio-2.0
+vala_check_package: glib-2.0
+vala_check_package: gobject-2.0
+vala_check_package: gtk+-3.0
+vala_check_package: libsoup-2.4
+vala_check_package: webkitgtk-3.0
+c_library: m
+*vala_source: browser.vala
+*vala_source: inspector.vala
+*vala_source: webkat.vala
+
+
+*po: po
+
+*translate: vala src/browser.vala
+*translate: vala src/inspector.vala
+*translate: vala src/webkat.vala
+
+*data: data/local
+
+*doc: doc
+
