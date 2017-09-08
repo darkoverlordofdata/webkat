@@ -49,7 +49,7 @@ public class Webkat : Object {
     static string? name = null;
     static string? iconPath = null;
     static string? comment = null;
-    [CCode (array_length = false, array_null_terminated = true)]
+    [CCode(array_length = false, array_null_terminated = true)]
     static string[] urls;
     static string url;
     static bool desktop = false;
@@ -59,17 +59,17 @@ public class Webkat : Object {
      */
     const OptionEntry[] options =
     {
-            { "height", 'h', 0, OptionArg.INT, ref height, "height in pixels", null },
-            { "width", 'w', 0, OptionArg.INT, ref width, "width in pixels", null },
-            { "title", 't', 0, OptionArg.STRING, ref title, "title bar text", null },
-            { "debug", 'd', 0, OptionArg.NONE, ref debug, "debug mode?", null },
-            { "webgl", 'g', 0, OptionArg.NONE, ref webgl, "enable webgl", null },
-            { "version", 'v', 0, OptionArg.NONE, ref version, "debug mode?", null },
-            { "name", 'n', 0, OptionArg.STRING, ref name, "desktop file name", null },
-            { "icon", 'i', 0, OptionArg.STRING, ref iconPath, "desktop icon", null },
-            { "comment", 'c', 0, OptionArg.STRING, ref comment, "desktop comment", null },		
-            { "", 0, 0, OptionArg.FILENAME_ARRAY, ref urls, null, "FILE..." },
-            { null }
+        { "height", 'h', 0, OptionArg.INT, ref height, "height in pixels", null },
+        { "width", 'w', 0, OptionArg.INT, ref width, "width in pixels", null },
+        { "title", 't', 0, OptionArg.STRING, ref title, "title bar text", null },
+        { "debug", 'd', 0, OptionArg.NONE, ref debug, "debug mode?", null },
+        { "webgl", 'g', 0, OptionArg.NONE, ref webgl, "enable webgl", null },
+        { "version", 'v', 0, OptionArg.NONE, ref version, "debug mode?", null },
+        { "name", 'n', 0, OptionArg.STRING, ref name, "desktop file name", null },
+        { "icon", 'i', 0, OptionArg.STRING, ref iconPath, "desktop icon", null },
+        { "comment", 'c', 0, OptionArg.STRING, ref comment, "desktop comment", null },		
+        { "", 0, 0, OptionArg.FILENAME_ARRAY, ref urls, null, "FILE..." },
+        { null }
     };
 
     /**
@@ -79,13 +79,13 @@ public class Webkat : Object {
 
         try 
         {
-            var opt_context = new OptionContext ("- WebKat");
-            opt_context.set_help_enabled (true);
-            opt_context.add_main_entries (options, null);
-            if (opt_context.parse (ref args) != true) 
+            var opt_context = new OptionContext("- WebKat");
+            opt_context.set_help_enabled(true);
+            opt_context.add_main_entries(options, null);
+            if (opt_context.parse(ref args) != true) 
             {
-                    print("Error parsing args...\n");
-                    return 0;                        
+                print("Error parsing args...\n");
+                return 0;                        
             }
         } 
         catch (OptionError e) 
@@ -106,9 +106,16 @@ public class Webkat : Object {
         width = width == 0 ? WIDTH : width;
         height = height == 0 ? HEIGHT : height;
             
-        if (desktop) 
+        if (name != null)
         {
-            MainLoop loop = new MainLoop ();
+            if (iconPath == null) 
+            {
+                print("Icon not specified\n");
+                return 0;
+            }
+            comment = comment == null ? title : comment;
+
+            MainLoop loop = new MainLoop();
             string template = """[Desktop Entry]
 Comment=%s
 Terminal=false
@@ -119,12 +126,11 @@ Icon=%s
 """;
             try 
             {
-                
                 string user = Environment.get_variable("USER");
                 string path = "/home/%s/Desktop/%s.desktop".printf(user, name);
                 string webgl_flag = webgl ? "--webgl" : "";
                 
-                string cmd = "%s --title %s --width %d --height %d %s".printf(url, title, width, height, webgl_flag);
+                string cmd = "%s --title=%s --width=%d --height=%d %s".printf(url, title, width, height, webgl_flag);
                 
                 var file = File.new_for_path(path);
                 {
@@ -137,26 +143,27 @@ Icon=%s
                 string[] spawn_env = Environ.get();
                 Pid child_pid;
                 
-                Process.spawn_async (null,
+                Process.spawn_async(null,
                     spawn_args,
                     spawn_env,
                     SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
                     null,
                     out child_pid);
 
-                ChildWatch.add (child_pid, (pid, status) => {
+                /* wait for chmod */
+                ChildWatch.add(child_pid,(pid, status) => {
                     // Triggered when the child indicated by child_pid exits
-                    Process.close_pid (pid);
-                    loop.quit ();
+                    Process.close_pid(pid);
+                    loop.quit();
                 });
 
-                loop.run ();
+                loop.run();
                 
             } 
             catch (Error e) 
             {
-                    stderr.printf ("Error: %s\n", e.message);
-                    return 1;
+                print("Error: %s\n", e.message);
+                return 1;
             }		
         }
         else 

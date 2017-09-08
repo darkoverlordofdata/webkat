@@ -39,43 +39,20 @@ public class Browser : Window
     public bool webgl = false;
     public bool desktop = false;
     private WebView webView;
-        /**
+    /**
      * Constructor
      */
     public Browser(bool debug, bool webgl, string url, string title, int width, int height) 
     {
 
-        try 
-        {
-            icon = new Gdk.Pixbuf.from_file("/usr/local/share/icons/webkat.png");
-        }
-        catch (Error e) 
-        {
-            icon = null;
-            print("Error: %s\n", e.message);
-        }
-        if (icon == null) 
-        {
-            try 
-            {
-                var share = GLib.Environment.get_user_data_dir();
-                icon = new Gdk.Pixbuf.from_file(@"$share/icons/webkat.png");
-            }
-            catch (Error e) 
-            {
-                icon = null;
-                print("Error: %s\n", e.message);
-            }
-
-        }
         this.title = title;
         use_inspector = debug;
         set_default_size(width, height);
 
-        //    Make the client window
+        // Make the client window
         webView = new WebView();
 
-        string user = Environment.get_variable("USER");
+        var user = Environment.get_variable("USER");
         var session = get_default_session();
         var config = GLib.Environment.get_user_config_dir();
         var cookiejar = new CookieJarText(@"$config/webkat.cookies", false);
@@ -101,10 +78,21 @@ public class Browser : Window
         webView.title_changed.connect(titleChanged);
         webView.web_inspector.inspect_web_view.connect(inspectWebView);
 
+        /**
+         * signal to open link in new window. 
+         * instead, open in new tab.
+         */
+        webView.new_window_policy_decision_requested.connect((p0, p1, p2, p3) => {
+            print("%s\n", p1.get_uri());
+            webView.open(p1.get_uri());
+            p3.ignore();
+            return false;
+        });
+
         // Display
         show_all();
         webView.open(url);
-        //webView.set_zoom_level((float)1.1);
+        //  webView.set_zoom_level((float)1.1);
         webView.zoom_in();
 
     }

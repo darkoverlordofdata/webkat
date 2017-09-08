@@ -7,7 +7,7 @@
             "request": "launch",
             "cwd": "${workspaceRoot}/install/src",
             "program": "${workspaceRoot}/install/src/${workspaceRootFolderName}",
-            "args": ["--webgl", "--debug",  "https://www.facebook.com"]
+            "args": ["--webgl", "--debug", "https://www.facebook.com"]
         }
     ]
 }

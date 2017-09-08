@@ -80,6 +80,10 @@ Note - this *should* not longer be necessary, I'm now using a local copy of the 
 	save and quit
 
 
+install/src
+./webkat --name=Facebook comment="Facebook" --webgl --debug --icon=/home/bruce/Pictures/facebook.png https://www.facebook.com
+
+
 
 ## License
 
