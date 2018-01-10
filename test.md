@@ -2,8 +2,6 @@
 
 this is to test Codiad save to git
 
-more stuff
-yet more!
 
 
 
