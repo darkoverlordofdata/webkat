@@ -8,7 +8,5 @@ yet more!
 ## One More Time
 with feelind AND four part harmony...
 
-### Oh No!
-will it never end?
 
 
